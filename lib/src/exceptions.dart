@@ -2,7 +2,7 @@
 class FeatureNotSupported implements Exception {
   /// Pass the feature name
   FeatureNotSupported(this.feature) {
-    message = "The feature $feature is not supported";
+    message = 'The feature $feature is not supported';
   }
 
   /// The feature

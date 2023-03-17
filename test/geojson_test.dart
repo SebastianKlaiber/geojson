@@ -1,13 +1,15 @@
+// ignore_for_file: avoid_print, unnecessary_string_escapes, unnecessary_type_check, avoid_dynamic_calls
+
 import 'dart:io';
 
-import "package:geojson/geojson.dart";
+import 'package:geojson/geojson.dart';
 import 'package:geopoint/geopoint.dart';
-import "package:test/test.dart";
+import 'package:test/test.dart';
 
 import 'data.dart';
 
 void main() {
-  test("nested geometryCollection", () async {
+  test('nested geometryCollection', () async {
     final features = await featuresFromGeoJson(geojsonNestedGeometryCollection);
     expect(features.collection.length, 1);
     final feature = features.collection[0];
@@ -15,14 +17,15 @@ void main() {
     final collection = feature.geometry as GeoJsonGeometryCollection;
     expect(collection.geometries?.length, 2);
     expect(
-        collection.geometries?[0]?.type, GeoJsonFeatureType.geometryCollection);
-    final innerCollection =
-        collection.geometries?[0]?.geometry as GeoJsonGeometryCollection;
+      collection.geometries?[0]?.type,
+      GeoJsonFeatureType.geometryCollection,
+    );
+    final innerCollection = collection.geometries?[0]?.geometry as GeoJsonGeometryCollection;
     expect(innerCollection.geometries?.length, 2);
     expect(
-        innerCollection.geometries!
-            .every((element) => element?.type == GeoJsonFeatureType.point),
-        true);
+      innerCollection.geometries!.every((element) => element?.type == GeoJsonFeatureType.point),
+      true,
+    );
 
     expect(collection.geometries?[1]?.type, GeoJsonFeatureType.point);
     final point = collection.geometries?[1]?.geometry as GeoJsonPoint;
@@ -30,7 +33,7 @@ void main() {
     expect(point.geoPoint.longitude, 0);
   });
 
-  test("point", () async {
+  test('point', () async {
     final features = await featuresFromGeoJson(geojsonPoint);
     expect(features.collection.length, 1);
     final feature = features.collection[0];
@@ -38,10 +41,10 @@ void main() {
     final point = feature.geometry as GeoJsonPoint;
     expect(point.geoPoint.latitude, 0);
     expect(point.geoPoint.longitude, 0);
-    expect(point.name, "point");
+    expect(point.name, 'point');
   });
 
-  test("multiPoint", () async {
+  test('multiPoint', () async {
     final features = await featuresFromGeoJson(geojsonMultiPoint);
     final feature = features.collection[0];
     expect(feature.type, GeoJsonFeatureType.multipoint);
@@ -49,17 +52,16 @@ void main() {
     expect(multipoint.geoSerie?.geoPoints.length, 2);
   });
 
-  test("line", () async {
-    final features =
-        await featuresFromGeoJson(geojsonLine, nameProperty: "nameprop");
+  test('line', () async {
+    final features = await featuresFromGeoJson(geojsonLine, nameProperty: 'nameprop');
     final feature = features.collection[0];
     expect(feature.type, GeoJsonFeatureType.line);
     final line = feature.geometry as GeoJsonLine;
     expect(line.geoSerie?.geoPoints.length, 2);
-    expect(line.name, "line");
+    expect(line.name, 'line');
   });
 
-  test("multiLine", () async {
+  test('multiLine', () async {
     final features = await featuresFromGeoJson(geojsonMultiLine);
     final feature = features.collection[0];
     expect(feature.type, GeoJsonFeatureType.multiline);
@@ -67,7 +69,7 @@ void main() {
     expect(multiLine.lines.length, 4);
   });
 
-  test("polygon", () async {
+  test('polygon', () async {
     final features = await featuresFromGeoJson(geojsonPolygon);
     final feature = features.collection[0];
     expect(feature.type, GeoJsonFeatureType.polygon);
@@ -75,14 +77,14 @@ void main() {
     expect(polygon.geoSeries[0].geoPoints.length, 3);
   });
 
-  test("multiPolygon", () async {
+  test('multiPolygon', () async {
     final features = await featuresFromGeoJson(geojsonMultiPolygon);
     final feature = features.collection[0];
     expect(feature.type, GeoJsonFeatureType.multipolygon);
     final multipolygon = feature.geometry as GeoJsonMultiPolygon;
     expect(multipolygon.polygons.length, 3);
   });
-  test("multi polygon geojson", () async {
+  test('multi polygon geojson', () async {
     //
     final geojson = GeoJson();
     geojson.endSignal.listen((event) => geojson.dispose());
@@ -110,36 +112,32 @@ void main() {
       neverCalled(e);
     }
   });
-  test("wrong file", () async {
-    await featuresFromGeoJsonFile(File("test/wrong.geojson"))
-        .then(print)
-        .catchError((dynamic e) {
-      expect(e.runtimeType.toString() == "FileSystemException", true);
-      expect(e.message, "The file test/wrong.geojson does not exist");
+  test('wrong file', () async {
+    await featuresFromGeoJsonFile(File('test/wrong.geojson')).then(print).catchError((dynamic e) {
+      expect(e.runtimeType.toString() == 'FileSystemException', true);
+      expect(e.message, 'The file test/wrong.geojson does not exist');
     });
   });
 
-  test("unreadable file", () async {
-    await featuresFromGeoJsonFile(File("test/data.bin"))
-        .then(print)
-        .catchError((dynamic e) {
-      expect(e.runtimeType.toString() == "FileSystemException", true);
+  test('unreadable file', () async {
+    await featuresFromGeoJsonFile(File('test/data.bin')).then(print).catchError((dynamic e) {
+      expect(e.runtimeType.toString() == 'FileSystemException', true);
       expect(
           e.message,
-          "Can not read file FileSystemException: "
+          'Can not read file FileSystemException: '
           "Failed to decode data using encoding 'utf-8', path = 'test/data.bin'");
     });
   });
 
-  test("file", () async {
-    final features = await featuresFromGeoJsonFile(File("test/data.geojson"));
+  test('file', () async {
+    final features = await featuresFromGeoJsonFile(File('test/data.geojson'));
     expect(features.collection.length, 1);
     final feature = features.collection[0];
     expect(feature.type, GeoJsonFeatureType.point);
     final point = feature.geometry as GeoJsonPoint;
     expect(point.geoPoint.latitude, 0);
     expect(point.geoPoint.longitude, 0);
-    expect(point.name, "point");
+    expect(point.name, 'point');
   });
 
   // test("unknown_feature", () async {
@@ -150,19 +148,21 @@ void main() {
   //   }
   // });
 
-  test("point properties", () async {
-    final gfc = GeoJsonFeatureCollection()..name = "mapmatch";
-    final lprops = Map<String, dynamic>();
-    lprops["point_color"] = "#000";
-    lprops["point_size"] = "7";
+  test('point properties', () async {
+    final gfc = GeoJsonFeatureCollection()..name = 'mapmatch';
+    final lprops = <String, dynamic>{};
+    lprops['point_color'] = '#000';
+    lprops['point_size'] = '7';
     final lp = GeoJsonFeature<GeoJsonPoint>()
       ..type = GeoJsonFeatureType.point
       ..properties = lprops
       ..geometry = GeoJsonPoint(
-          geoPoint: GeoPoint(latitude: 37.111, longitude: 126.000), name: "a");
+        geoPoint: GeoPoint(latitude: 37.111, longitude: 126),
+        name: 'a',
+      );
     gfc.collection.add(lp);
     final s = gfc.serialize();
-    expect(s.contains("\"point_size\":\"7\""), true);
-    expect(s.contains("\"point_color\":\"#000\""), true);
+    expect(s.contains('\"point_size\":\"7\"'), true);
+    expect(s.contains('\"point_color\":\"#000\"'), true);
   });
 }

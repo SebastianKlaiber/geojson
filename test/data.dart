@@ -1,4 +1,6 @@
-String geojsonNestedGeometryCollection = """{
+// ignore: prefer_single_quotes
+// ignore: leading_newlines_in_multiline_strings
+String geojsonNestedGeometryCollection = '''{
   "type": "FeatureCollection",
   "features": [
     {
@@ -28,8 +30,9 @@ String geojsonNestedGeometryCollection = """{
       }
     }
   ]
-}""";
-String geojsonPoint = """{
+}''';
+// ignore: leading_newlines_in_multiline_strings
+String geojsonPoint = '''{
   "type": "FeatureCollection",
   "features": [
     {
@@ -41,8 +44,9 @@ String geojsonPoint = """{
       }
     }
   ]
-}""";
-String geojsonMultiPoint = """{
+}''';
+String geojsonMultiPoint = '''
+{
   "type": "FeatureCollection",
   "features": [
     {
@@ -53,8 +57,9 @@ String geojsonMultiPoint = """{
       }
     }
   ]
-}""";
-String geojsonLine = """{
+}''';
+String geojsonLine = '''
+{
   "type": "FeatureCollection",
   "features": [
     {
@@ -69,8 +74,9 @@ String geojsonLine = """{
       }
     }
   ]
-}""";
-String geojsonMultiLine = """{
+}''';
+String geojsonMultiLine = '''
+{
   "type": "FeatureCollection",
   "features": [
     {
@@ -98,8 +104,9 @@ String geojsonMultiLine = """{
       }
     }
   ]
-}""";
-String geojsonPolygon = """{
+}''';
+String geojsonPolygon = '''
+{
   "type": "FeatureCollection",
   "features": [
     {
@@ -116,8 +123,9 @@ String geojsonPolygon = """{
       }
     }
   ]
-}""";
-String geojsonMultiPolygon = """{
+}''';
+String geojsonMultiPolygon = '''
+{
   "type": "FeatureCollection",
   "features": [
     {
@@ -153,8 +161,9 @@ String geojsonMultiPolygon = """{
       }
     }
   ]
-}""";
-String geojsonUnsupported = """{
+}''';
+String geojsonUnsupported = '''
+{
   "type": "FeatureCollection",
   "features": [
     {
@@ -166,4 +175,4 @@ String geojsonUnsupported = """{
       }
     }
   ]
-}""";
+}''';

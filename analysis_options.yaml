@@ -1,4 +1,4 @@
-include: package:extra_pedantic/analysis_options.yaml
+include: package:very_good_analysis/analysis_options.yaml
 
 analyzer:
   strong-mode:
@@ -10,6 +10,9 @@ analyzer:
     invalid_use_of_protected_member: error
     dead_code: info
     sdk_version_async_exported_from_core: ignore
+    lines_longer_than_80_chars: ignore
+    for_in_of_invalid_type: ignore
+
 linter:
   rules:
     - unnecessary_statements
